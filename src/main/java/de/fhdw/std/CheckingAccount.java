@@ -14,7 +14,7 @@ public class CheckingAccount extends BankAccount {
     public void withdraw(double amount) {
         checkAmountIsPositive(amount);
 
-        if (amount > balance - overdraftLimit) {
+        if (amount > balance + overdraftLimit) {
             throw new InsufficientFundsException();
         } else {
             balance -= amount;

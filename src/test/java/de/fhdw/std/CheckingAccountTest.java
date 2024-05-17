@@ -6,12 +6,50 @@ import org.junit.jupiter.api.Test;
 class CheckingAccountTest {
 
     @Test
-    void succeedingTest() {
-        Assertions.assertEquals(0.1, 0.1, "Should be equal!");
+    void depositPositive() {
+        CheckingAccount account = new CheckingAccount("1", 0, 500, 5);
+
+        account.deposit(100);
+
+        Assertions.assertEquals(100, account.getBalance());
     }
 
     @Test
-    void failingTest() {
-        Assertions.assertEquals(42, 23, "Should be equal!");
+    void depositNegative() {
+        CheckingAccount account = new CheckingAccount("1", 0, 500, 5);
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> account.deposit(-100));
+    }
+
+    @Test
+    void withdrawAvailableAmount() {
+        CheckingAccount account = new CheckingAccount("1", 1000, 500, 5);
+
+        account.withdraw(200);
+
+        Assertions.assertEquals(800, account.getBalance());
+    }
+
+    @Test
+    void withdrawWithinLimit() {
+        CheckingAccount account = new CheckingAccount("1", 1000, 500, 5);
+
+        account.withdraw(1200);
+
+        Assertions.assertEquals(-205, account.getBalance());
+    }
+
+    @Test
+    void withdrawAboveLimit() {
+        CheckingAccount account = new CheckingAccount("1", 1000, 500, 5);
+
+        Assertions.assertThrows(InsufficientFundsException.class, () -> account.withdraw(1700));
+    }
+
+    @Test
+    void withdrawNegativeAmount() {
+        CheckingAccount account = new CheckingAccount("1", 0, 500, 5);
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> account.withdraw(-100));
     }
 }
