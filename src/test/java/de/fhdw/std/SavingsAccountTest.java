@@ -1,7 +1,9 @@
 package de.fhdw.std;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static de.fhdw.std.assertions.BankAccountAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SavingsAccountTest {
 
@@ -11,14 +13,15 @@ class SavingsAccountTest {
 
         account.deposit(100);
 
-        Assertions.assertEquals(1100, account.getBalance());
+        assertThat(account).hasBalance(1100);
     }
 
     @Test
     void depositNegative() {
         SavingsAccount account = new SavingsAccount("1", 1000, 0.05);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> account.deposit(-100));
+        assertThatThrownBy(() -> account.deposit(-100))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -27,20 +30,22 @@ class SavingsAccountTest {
 
         account.withdraw(200);
 
-        Assertions.assertEquals(800, account.getBalance());
+        assertThat(account).hasBalance(800);
     }
 
     @Test
     void withdrawAboveAmount() {
         SavingsAccount account = new SavingsAccount("1", 1000, 0.05);
 
-        Assertions.assertThrows(InsufficientFundsException.class, () -> account.withdraw(1100));
+        assertThatThrownBy(() -> account.withdraw(1100))
+                .isInstanceOf(InsufficientFundsException.class);
     }
 
     @Test
     void withdrawNegativeAmount() {
         SavingsAccount account = new SavingsAccount("1", 1000, 0.05);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> account.withdraw(-100));
+        assertThatThrownBy(() -> account.withdraw(-100))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
