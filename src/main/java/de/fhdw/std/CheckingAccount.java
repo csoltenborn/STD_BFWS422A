@@ -1,5 +1,7 @@
 package de.fhdw.std;
 
+import de.fhdw.std.utils.ExcludeFromJacocoGeneratedReport;
+
 public class CheckingAccount extends BankAccount {
     private double overdraftLimit;
     private double overdraftFee;
@@ -25,6 +27,7 @@ public class CheckingAccount extends BankAccount {
         }
     }
 
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         return "CheckingAccount{" +

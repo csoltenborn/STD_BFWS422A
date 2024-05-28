@@ -1,5 +1,7 @@
 package de.fhdw.std;
 
+import de.fhdw.std.utils.ExcludeFromJacocoGeneratedReport;
+
 public class SavingsAccount extends BankAccount {
     private double interestRate;
 
@@ -26,6 +28,7 @@ public class SavingsAccount extends BankAccount {
         return this.interestRate;
     }
 
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public String toString() {
         return "SavingsAccount{" +

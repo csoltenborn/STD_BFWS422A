@@ -48,4 +48,13 @@ class SavingsAccountTest {
         assertThatThrownBy(() -> account.withdraw(-100))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void addInterest() {
+        SavingsAccount account = new SavingsAccount("1", 1000, 0.05);
+
+        account.addInterest();
+
+        assertThat(account).hasBalance(1050);
+    }
 }
