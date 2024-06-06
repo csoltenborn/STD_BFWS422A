@@ -1,6 +1,11 @@
 package de.fhdw.std;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static de.fhdw.std.assertions.BankAccountAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,22 +29,21 @@ class CheckingAccountTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void withdrawAvailableAmount() {
-        CheckingAccount account = new CheckingAccount("1", 1000, 500, 5);
-
-        account.withdraw(200);
-
-        assertThat(account).hasBalance(800);
+    private static Stream<Arguments> provideValuesForWithdraw() {
+        return Stream.of(
+                Arguments.of(1000, 1500, 5, 1200, -205),
+                Arguments.of(1000, 500, 5, 200, 800)
+        );
     }
 
-    @Test
-    void withdrawWithinLimit() {
-        CheckingAccount account = new CheckingAccount("1", 1000, 500, 5);
+    @ParameterizedTest
+    @MethodSource("provideValuesForWithdraw")
+    void withdrawAvailableAmount(double balance, double overdraftLimit, double overdraftFee, double amount, double expectedBalance) {
+        CheckingAccount account = new CheckingAccount("1", balance, overdraftLimit, overdraftFee);
 
-        account.withdraw(1200);
+        account.withdraw(amount);
 
-        assertThat(account).hasBalance(-205);
+        assertThat(account).hasBalance(expectedBalance);
     }
 
     @Test
