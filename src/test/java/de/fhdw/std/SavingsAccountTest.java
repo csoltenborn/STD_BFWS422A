@@ -1,5 +1,6 @@
 package de.fhdw.std;
 
+import de.fhdw.std.exception.InsufficientFundsException;
 import org.junit.jupiter.api.Test;
 
 import static de.fhdw.std.assertions.BankAccountAssert.assertThat;

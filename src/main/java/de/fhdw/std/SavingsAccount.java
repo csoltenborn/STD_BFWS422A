@@ -1,5 +1,6 @@
 package de.fhdw.std;
 
+import de.fhdw.std.exception.InsufficientFundsException;
 import de.fhdw.std.utils.ExcludeFromJacocoGeneratedReport;
 
 public class SavingsAccount extends BankAccount {

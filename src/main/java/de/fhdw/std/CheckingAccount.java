@@ -1,8 +1,12 @@
 package de.fhdw.std;
 
+import de.fhdw.std.exception.IllegalAmountException;
+import de.fhdw.std.exception.InsufficientFundsException;
 import de.fhdw.std.utils.ExcludeFromJacocoGeneratedReport;
 
 public class CheckingAccount extends BankAccount {
+    public static final double MAX_LEGAL_AMOUNT = 20000;
+
     private double overdraftLimit;
     private double overdraftFee;
 
@@ -10,6 +14,14 @@ public class CheckingAccount extends BankAccount {
         super(accountId, balance);
         this.overdraftLimit = overdraftLimit;
         this.overdraftFee = overdraftFee;
+    }
+
+    @Override
+    public void deposit(double amount) {
+        if (amount > MAX_LEGAL_AMOUNT) {
+            throw new IllegalAmountException();
+        }
+        super.deposit(amount);
     }
 
     @Override
