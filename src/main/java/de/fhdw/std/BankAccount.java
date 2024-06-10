@@ -26,7 +26,7 @@ public abstract class BankAccount {
     }
 
     protected void checkAmountIsPositive(double amount) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException("amount must be > 0");
         }
     }
