@@ -77,4 +77,18 @@ public class BankServiceIntegrationTest {
         assertThat(sourceAccount).hasBalance(-110);
     }
 
+    @Test
+    public void massWithdraw_checkingAccountWithNegativeBalanceAboveLimit_isContainedInResult() {
+        CheckingAccount targetAccount = new CheckingAccount("1", 0, 0, 0);
+        CheckingAccount sourceAccount = new CheckingAccount("2", -1000, 1000, 5);
+        bankDatabase.updateAccount(targetAccount);
+        bankDatabase.updateAccount(sourceAccount);
+
+        List<String> failedWithdrawals = bankServiceUnderTest.massWithdraw(targetAccount.getId(), List.of(sourceAccount.getId()), 10);
+
+        assertThat(failedWithdrawals).hasSameElementsAs(List.of(sourceAccount.getId()));
+        assertThat(targetAccount).hasBalance(0);
+        assertThat(sourceAccount).hasBalance(-1000);
+    }
+
 }
