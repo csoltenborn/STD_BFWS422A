@@ -33,13 +33,16 @@ public class BankService {
         ArrayList<String> result = new ArrayList<>();
         for (String sourceId : sourceAccountIds) {
             BankAccount sourceAccount = database.getAccount(sourceId);
+            boolean transferDone = false;
             if (sourceAccount.getBalance() > amount || sourceAccount.getBalance() < 0) {
                 try {
                     transfer(sourceId, targetAccountId, amount);
+                    transferDone = true;
                 } catch (InsufficientFundsException e) {
-                    result.add(sourceId);
                 }
-            } else {
+            }
+
+            if (!transferDone) {
                 result.add(sourceId);
             }
         }
