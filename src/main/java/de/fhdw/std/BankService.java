@@ -31,7 +31,7 @@ public class BankService {
         ArrayList<String> result = new ArrayList<>();
         for (String sourceId : sourceAccountIds) {
             BankAccount sourceAccount = database.getAccount(sourceId);
-            if (sourceAccount.getBalance() > amount) {
+            if (sourceAccount.getBalance() > amount || sourceAccount.getBalance() < 0) {
                 transfer(sourceId, targetAccountId, amount);
             } else {
                 result.add(sourceId);
