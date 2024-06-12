@@ -1,5 +1,7 @@
 package de.fhdw.std;
 
+import de.fhdw.std.exception.InsufficientFundsException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,11 @@ public class BankService {
         for (String sourceId : sourceAccountIds) {
             BankAccount sourceAccount = database.getAccount(sourceId);
             if (sourceAccount.getBalance() > amount || sourceAccount.getBalance() < 0) {
-                transfer(sourceId, targetAccountId, amount);
+                try {
+                    transfer(sourceId, targetAccountId, amount);
+                } catch (InsufficientFundsException e) {
+                    result.add(sourceId);
+                }
             } else {
                 result.add(sourceId);
             }
