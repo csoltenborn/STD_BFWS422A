@@ -26,6 +26,10 @@ public class BankService {
         database.addTransaction(accountId, new Transaction("Withdraw", amount, account.getBalance()));
     }
 
+    public List<String> massWithdraw(String targetAccountId, List<String> sourceAccountIds, double amount) {
+        return null;
+    }
+
     public void transfer(String fromAccountId, String toAccountId, double amount) {
         BankAccount fromAccount = database.getAccount(fromAccountId);
         BankAccount toAccount = database.getAccount(toAccountId);
