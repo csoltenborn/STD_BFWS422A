@@ -1,6 +1,5 @@
 package de.fhdw.std;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class BankService {
     public List<String> massWithdraw(String targetAccountId, List<String> sourceAccountIds, double amount) {
         ArrayList<String> result = new ArrayList<>();
         for (String sourceId : sourceAccountIds) {
-            CheckingAccount sourceAccount = (CheckingAccount) database.getAccount(sourceId);
+            BankAccount sourceAccount = database.getAccount(sourceId);
             if (sourceAccount.getBalance() > amount) {
                 transfer(sourceId, targetAccountId, amount);
             } else {
