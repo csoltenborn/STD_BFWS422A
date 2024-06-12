@@ -1,5 +1,6 @@
 package de.fhdw.std;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BankService {
@@ -27,7 +28,10 @@ public class BankService {
     }
 
     public List<String> massWithdraw(String targetAccountId, List<String> sourceAccountIds, double amount) {
-        return null;
+        for (String sourceId : sourceAccountIds) {
+            transfer(sourceId, targetAccountId, amount);
+        }
+        return new ArrayList<>();
     }
 
     public void transfer(String fromAccountId, String toAccountId, double amount) {
