@@ -9,7 +9,7 @@ import static de.fhdw.std.assertions.BankAccountAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class BankServiceIntergrationTest {
+public class BankServiceIntegrationTest {
 
     private BankDatabase bankDatabase;
 
