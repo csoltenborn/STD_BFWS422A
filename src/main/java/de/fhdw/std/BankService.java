@@ -40,8 +40,11 @@ public class BankService {
                     transferDone = true;
                 } catch (InsufficientFundsException e) {
                 }
+            } else if (sourceAccount instanceof SavingsAccount && sourceAccount.getBalance() < amount) {
+                ((SavingsAccount)sourceAccount).addInterest();
+                transfer(sourceId, targetAccountId, amount);
+                transferDone = true;
             }
-
             if (!transferDone) {
                 result.add(sourceId);
             }
