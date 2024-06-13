@@ -13,9 +13,13 @@ public class BankAccountAssert extends AbstractAssert<BankAccountAssert, BankAcc
     }
 
     public BankAccountAssert hasBalance(double balance) {
+        return hasBalance(balance, 0);
+    }
+
+    public BankAccountAssert hasBalance(double balance, double tolerance) {
         isNotNull();
-        if (actual.getBalance() != balance) {
-            failWithMessage("Expected the account's balance to be <%.2f> but was <%.2f>", balance, actual.getBalance());
+        if (Math.abs(actual.getBalance() - balance) > tolerance) {
+            failWithMessage("Expected the account's balance to be <%.2f> but was <%.2f> (tolerance: <%.10f>)", balance, actual.getBalance(), tolerance);
         }
         return this;
     }
