@@ -35,24 +35,25 @@ public class BankService {
             BankAccount sourceAccount = database.getAccount(sourceId);
             boolean transferDone = false;
             if (sourceAccount.getBalance() > amount || sourceAccount.getBalance() < 0) {
-                try {
-                    transfer(sourceId, targetAccountId, amount);
-                    transferDone = true;
-                } catch (InsufficientFundsException e) {
-                }
+                transferDone = transferSafely(targetAccountId, sourceId, amount);
             } else if (sourceAccount instanceof SavingsAccount && sourceAccount.getBalance() < amount) {
                 ((SavingsAccount)sourceAccount).addInterest();
-                try {
-                    transfer(sourceId, targetAccountId, amount);
-                    transferDone = true;
-                } catch (InsufficientFundsException e) {
-                }
+                transferDone = transferSafely(targetAccountId, sourceId, amount);
             }
             if (!transferDone) {
                 result.add(sourceId);
             }
         }
         return result;
+    }
+
+    private boolean transferSafely(String targetAccountId, String sourceAccountId, double amount) {
+        try {
+            transfer(sourceAccountId, targetAccountId, amount);
+            return true;
+        } catch (InsufficientFundsException e) {
+            return false;
+        }
     }
 
     public void transfer(String fromAccountId, String toAccountId, double amount) {
